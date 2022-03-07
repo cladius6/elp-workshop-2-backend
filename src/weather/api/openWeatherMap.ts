@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { WeatherApi } from './weatherApi';
+import { OpenWeatherMapKeywordsInterface } from '../interfaces/weather.interface';
 
 export class OpenWeatherMap extends WeatherApi {
   client: AxiosInstance;
@@ -30,7 +31,7 @@ export class OpenWeatherMap extends WeatherApi {
     });
   }
 
-  openWeatherDataKeywords = {
+  openWeatherDataKeywords: OpenWeatherMapKeywordsInterface = {
     temp: 'temperature',
     pressure: 'pressure',
     humidity: 'humidity',

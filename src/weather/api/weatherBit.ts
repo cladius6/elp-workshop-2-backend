@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosInstance } from 'axios';
+import { WeatherBitKeywordsInterface } from '../interfaces/weather.interface';
 import { WeatherApi } from './weatherApi';
 
 export class WeatherBit extends WeatherApi {
@@ -28,7 +29,7 @@ export class WeatherBit extends WeatherApi {
     });
   }
 
-  weatherBitDataKeywords = {
+  weatherBitDataKeywords: WeatherBitKeywordsInterface = {
     temp: 'temperature',
     pres: 'pressure',
     rh: 'humidity',
