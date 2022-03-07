@@ -4,10 +4,12 @@ import {
   HttpHealthIndicator,
   HealthCheck,
 } from '@nestjs/terminus';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('health')
 export class HealthController {
   constructor(
+    private configService: ConfigService,
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
   ) {}
@@ -18,11 +20,14 @@ export class HealthController {
     return this.health.check([
       () =>
         this.http.pingCheck(
-          'api.openweathermap.org',
-          'https://api.openweathermap.org/',
+          this.configService.get<string>('weatherApi.openWeatherMap.name'),
+          this.configService.get<string>('weatherApi.openWeatherMap.host'),
         ),
       () =>
-        this.http.pingCheck('api.weatherbit.io', 'https://api.weatherbit.io/'),
+        this.http.pingCheck(
+          this.configService.get<string>('weatherApi.weatherBit.name'),
+          this.configService.get<string>('weatherApi.weatherBit.host'),
+        ),
     ]);
   }
 }
