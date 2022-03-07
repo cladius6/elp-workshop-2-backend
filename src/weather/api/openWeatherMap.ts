@@ -22,6 +22,8 @@ export class OpenWeatherMap extends WeatherApi {
       baseURL: this.configService.get<string>(
         'weatherApi.openWeatherMap.baseURL',
       ),
+      timeout: 1000,
+      headers: { 'Content-Type': 'application/json' },
       params: {
         APPID: this.configService.get<string>('weatherApi.openWeatherMap.key'),
       },
