@@ -1,5 +1,5 @@
 describe('#GET example', () => {
-  describe("for default weather data api, means query is 'alternateSource=false'", () => {
+  describe("for default weather data api, when query 'alternateSource=false'", () => {
     describe("check if returned objects have 'temperature, pressure, humidity, source' properties", () => {
       it("returned object should have 'temperature' property", () => {
         // given
@@ -45,7 +45,7 @@ describe('#GET example', () => {
         haveProperty(request, 'source');
       });
     });
-    describe("check if returned objects have 'temperature, pressure, humidity, source' properties correct type", () => {
+    describe("check if returned objects have 'temperature, pressure, humidity, source' properties of correct type", () => {
       it("'temperature' property value should be number", () => {
         // given
         apiIsAvailable();
@@ -82,6 +82,95 @@ describe('#GET example', () => {
 
         //when
         const request = getCurrentWeather(1, 1, false);
+
+        //then
+        haveProperty(request, 'source', 'string');
+      });
+    });
+  });
+
+  describe("for alternate weather data api, when query 'alternateSource=true'", () => {
+    describe("check if returned objects have 'temperature, pressure, humidity, source' properties", () => {
+      it("returned object should have 'temperature' property", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
+
+        //then
+        haveProperty(request, 'temperature');
+      });
+      it("returned object should have 'pressure' property", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
+
+        //then
+        haveProperty(request, 'temperature');
+      });
+
+      it("returned object should have 'humidity' property", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
+
+        //then
+        haveProperty(request, 'temperature');
+      });
+
+      it("returned object should have 'source' property", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
+
+        //then
+        haveProperty(request, 'temperature');
+      });
+    });
+    describe("check if returned objects have 'temperature, pressure, humidity, source' properties as desired type", () => {
+      it("'temperature' property value should be number", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
+
+        //then
+        haveProperty(request, 'temperature', 'number');
+      });
+      it("'pressure' property value should be number", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
+
+        //then
+        haveProperty(request, 'pressure', 'number');
+      });
+      it("'humidity' property value should be string", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
+
+        //then
+        haveProperty(request, 'humidity', 'number');
+      });
+      it("'source' property value should be number", () => {
+        // given
+        apiIsAvailable();
+
+        //when
+        const request = getCurrentWeather(1, 1, true);
 
         //then
         haveProperty(request, 'source', 'string');
