@@ -12,6 +12,7 @@ export class WeatherBit extends WeatherApi {
     const data = super.getCurrentWeatherData(
       this.client,
       this.configService.get<string>('weatherApi.weatherBit.url'),
+      this.weatherBitDataKeywords,
     );
     return data;
   }
@@ -24,4 +25,10 @@ export class WeatherBit extends WeatherApi {
       },
     });
   }
+
+  weatherBitDataKeywords = {
+    temp: 'temperature',
+    pres: 'pressure',
+    rh: 'humidity',
+  };
 }

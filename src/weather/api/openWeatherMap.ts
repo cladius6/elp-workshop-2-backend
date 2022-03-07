@@ -12,6 +12,7 @@ export class OpenWeatherMap extends WeatherApi {
     const data = super.getCurrentWeatherData(
       this.client,
       this.configService.get<string>('weatherApi.openWeatherMap.url'),
+      this.openWeatherDataKeywords,
     );
     return data;
   }
@@ -26,4 +27,10 @@ export class OpenWeatherMap extends WeatherApi {
       },
     });
   }
+
+  openWeatherDataKeywords = {
+    temp: 'temperature',
+    pressure: 'pressure',
+    humidity: 'humidity',
+  };
 }
