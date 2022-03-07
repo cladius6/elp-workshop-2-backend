@@ -1,15 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
+import { WeatherService } from './weather.service';
 
 @Controller()
 export class WeatherController {
+  constructor(private readonly weatherService: WeatherService) {}
+
   @Get('/current_weather')
-  async getCurrentWeather() {
-    const response = {
-      temperature: 1,
-      pressure: 1,
-      humidity: 1,
-      source: 'its string',
-    };
+  async getCurrentWeather(@Query() queries) {
+    const response = await this.weatherService.getCurrentWeather(
+      queries.lat,
+      queries.lon,
+      queries.alternateSource,
+    );
     return response;
   }
 }
