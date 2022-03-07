@@ -1,6 +1,11 @@
 import { AxiosResponse } from '@nestjs/terminus/dist/health-indicator/http/axios.interfaces';
 import axios, { AxiosInstance } from 'axios';
-import { WeatherDataInterface } from '../interfaces/weather.interface';
+import {
+  OpenWeatherMapKeywordsInterface,
+  WeatherBitKeywordsInterface,
+  WeatherDataInterface,
+} from '../interfaces/weather.interface';
+
 export class WeatherApi {
   lon: number;
   lat: number;
@@ -10,7 +15,11 @@ export class WeatherApi {
     this.lon = lon;
   }
 
-  async getCurrentWeatherData(apiClient: AxiosInstance, url: string, keywords) {
+  async getCurrentWeatherData(
+    apiClient: AxiosInstance,
+    url: string,
+    keywords: WeatherBitKeywordsInterface | OpenWeatherMapKeywordsInterface,
+  ) {
     const response = await apiClient.get(url, {
       params: { lat: this.lat, lon: this.lon },
     });
