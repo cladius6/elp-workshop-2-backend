@@ -1,46 +1,50 @@
 describe('#GET example', () => {
-  it("returned object should have 'temperature' property", () => {
-    // given
-    apiIsAvailable();
+  describe("for default weather data api, means query is 'alternateSource=false'", () => {
+    describe("check if returned objects have 'temperature, pressure, humidity, source' properties", () => {
+      it("returned object should have 'temperature' property", () => {
+        // given
+        apiIsAvailable();
 
-    //when
-    const request = getCurrentWeather(1, 1, false);
+        //when
+        const request = getCurrentWeather(1, 1, false);
 
-    //then
-    haveProperty(request, 'temperature');
-  });
+        //then
+        haveProperty(request, 'temperature');
+      });
 
-  it("returned object should have 'pressure' property", () => {
-    // given
-    apiIsAvailable();
+      it("returned object should have 'pressure' property", () => {
+        // given
+        apiIsAvailable();
 
-    //when
-    const request = getCurrentWeather(1, 1, false);
+        //when
+        const request = getCurrentWeather(1, 1, false);
 
-    //then
-    haveProperty(request, 'pressure');
-  });
+        //then
+        haveProperty(request, 'pressure');
+      });
 
-  it("returned object should have 'humidity' property", () => {
-    // given
-    apiIsAvailable();
+      it("returned object should have 'humidity' property", () => {
+        // given
+        apiIsAvailable();
 
-    //when
-    const request = getCurrentWeather(1, 1, false);
+        //when
+        const request = getCurrentWeather(1, 1, false);
 
-    //then
-    haveProperty(request, 'humidity');
-  });
+        //then
+        haveProperty(request, 'humidity');
+      });
 
-  it("returned object should have 'source' property", () => {
-    // given
-    apiIsAvailable();
+      it("returned object should have 'source' property", () => {
+        // given
+        apiIsAvailable();
 
-    //when
-    const request = getCurrentWeather(1, 1, false);
+        //when
+        const request = getCurrentWeather(1, 1, false);
 
-    //then
-    haveProperty(request, 'source');
+        //then
+        haveProperty(request, 'source');
+      });
+    });
   });
 });
 
