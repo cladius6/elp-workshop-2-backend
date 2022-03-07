@@ -193,7 +193,7 @@ describe('#GET example', () => {
         );
       });
     });
-    it("'source' should contains weatherbit.it when 'alternateSource=true'", () => {
+    it("'source' should contains weatherbit.io when 'alternateSource=true'", () => {
       // given
       apiIsAvailable();
 
