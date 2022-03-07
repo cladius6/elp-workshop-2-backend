@@ -4,11 +4,11 @@ import { TerminusModule } from '@nestjs/terminus';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { HealthController } from './health/health.controller';
-import { WeatherController } from './weather/weather.controller';
+import { WeatherModule } from './weather/weather.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), TerminusModule, HttpModule],
-  controllers: [AppController, HealthController, WeatherController],
+  imports: [ConfigModule.forRoot(), TerminusModule, HttpModule, WeatherModule],
+  controllers: [AppController, HealthController],
   providers: [],
 })
 export class AppModule {}
