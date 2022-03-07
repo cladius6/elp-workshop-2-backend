@@ -1,27 +1,48 @@
 describe('#GET example', () => {
-  it('returns example object', () => {
+  it("returned object should have 'temperature' property", () => {
     // given
     apiIsAvailable();
 
     //when
-    const request = getExample();
+    const request = getCurrentWeather(1, 1, false);
 
     //then
-    resultIs(request, { example: true });
+    haveProperty(request, 'temperature');
   });
 });
 
-function apiIsAvailable() {}
-
-function getExample(): Cypress.Chainable<Cypress.Response<any>> {
-  return cy.request('GET', `http://localhost:3001/example`);
+function apiIsAvailable() {
+  cy.request('GET', '/health/api').then((response) => {
+    expect(response.body).to.have.property('status', 'ok');
+  });
 }
 
-async function resultIs(
+function getCurrentWeather(
+  latitude: number,
+  longitude: number,
+  alternateSource: boolean,
+): Cypress.Chainable<Cypress.Response<any>> {
+  return cy.request({
+    method: 'GET',
+    url: `/current_weather`,
+    qs: {
+      lat: latitude,
+      lon: longitude,
+      alternateSource: alternateSource,
+    },
+  });
+}
+
+async function haveProperty(
   request: Cypress.Chainable<Cypress.Response<any>>,
-  result: { example: boolean },
+  key: string,
+  type?: string,
 ) {
   request.should((response) => {
-    expect(response.body).to.eql(result);
+    if (type != undefined) {
+      expect(response.body).to.have.property(key).a(type);
+    } else {
+      expect(response.body).to.have.property(key);
+    }
   });
 }
