@@ -1,4 +1,4 @@
-import { IsBoolean, IsNumber } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 import { ToBoolean } from 'src/decorators/toBoolean.decorator';
 
 export class CurrentWeatherDto {
@@ -10,5 +10,6 @@ export class CurrentWeatherDto {
 
   @ToBoolean()
   @IsBoolean()
+  @IsOptional()
   alternateSource: boolean;
 }
