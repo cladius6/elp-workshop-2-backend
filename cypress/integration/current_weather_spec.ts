@@ -223,6 +223,36 @@ describe('#GET example', () => {
       });
     });
   });
+  it("should return 'status: 400' if longitude or latitude not given", () => {
+    // given
+    apiIsAvailable();
+    //when
+    const request = getCurrentWeather();
+    //then
+    request.should((response) => {
+      expect(response.status).to.eq(400);
+    });
+  });
+  it("should return 'status: 400' if longitude doesn't belong to the collection <-180,180>", () => {
+    // given
+    apiIsAvailable();
+    //when
+    const request = getCurrentWeather(4, 181);
+    //then
+    request.should((response) => {
+      expect(response.status).to.eq(400);
+    });
+  });
+  it("should return 'status: 400' if latitude doesn't belong to the collection <-90,90>", () => {
+    // given
+    apiIsAvailable();
+    //when
+    const request = getCurrentWeather(-91, 90);
+    //then
+    request.should((response) => {
+      expect(response.status).to.eq(400);
+    });
+  });
 });
 
 function apiIsAvailable() {
@@ -232,13 +262,14 @@ function apiIsAvailable() {
 }
 
 function getCurrentWeather(
-  latitude: number,
-  longitude: number,
+  latitude?: number | undefined,
+  longitude?: number | undefined,
   alternateSource?: boolean,
 ): Cypress.Chainable<Cypress.Response<any>> {
   return cy.request({
     method: 'GET',
     url: `/current_weather`,
+    failOnStatusCode: false,
     qs: {
       lat: latitude,
       lon: longitude,
