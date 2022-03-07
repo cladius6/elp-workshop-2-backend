@@ -8,6 +8,7 @@ export class WeatherService {
       pressure: 1,
       humidity: 1,
       source: 'its string',
+      alternateSource: alternateSource,
     };
     return response;
   }
