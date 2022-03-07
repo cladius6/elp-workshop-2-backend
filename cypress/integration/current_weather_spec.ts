@@ -9,6 +9,39 @@ describe('#GET example', () => {
     //then
     haveProperty(request, 'temperature');
   });
+
+  it("returned object should have 'pressure' property", () => {
+    // given
+    apiIsAvailable();
+
+    //when
+    const request = getCurrentWeather(1, 1, false);
+
+    //then
+    haveProperty(request, 'pressure');
+  });
+
+  it("returned object should have 'humidity' property", () => {
+    // given
+    apiIsAvailable();
+
+    //when
+    const request = getCurrentWeather(1, 1, false);
+
+    //then
+    haveProperty(request, 'humidity');
+  });
+
+  it("returned object should have 'source' property", () => {
+    // given
+    apiIsAvailable();
+
+    //when
+    const request = getCurrentWeather(1, 1, false);
+
+    //then
+    haveProperty(request, 'source');
+  });
 });
 
 function apiIsAvailable() {
