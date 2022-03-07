@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { OpenWeatherMap } from './api/openWeatherMap';
 import { WeatherBit } from './api/weatherBit';
 import { ConfigService } from '@nestjs/config';
+import { OpenWeatherMapAdapter } from './api/openWeatherMapAdapter';
 
 @Injectable()
 export class WeatherService {
@@ -10,7 +10,7 @@ export class WeatherService {
   async getCurrentWeather(lat: number, lon: number, alternateSource: boolean) {
     const weatherSource = alternateSource
       ? new WeatherBit(this.configService, lat, lon)
-      : new OpenWeatherMap(this.configService, lat, lon);
+      : new OpenWeatherMapAdapter(this.configService, lat, lon);
     const response = weatherSource.getCurrentWeatherData();
     return response;
   }
