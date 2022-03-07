@@ -66,7 +66,7 @@ describe('#GET example', () => {
         //then
         haveProperty(request, 'pressure', 'number');
       });
-      it("'humidity' property value should be string", () => {
+      it("'humidity' property value should be number", () => {
         // given
         apiIsAvailable();
 
@@ -76,7 +76,7 @@ describe('#GET example', () => {
         //then
         haveProperty(request, 'humidity', 'number');
       });
-      it("'source' property value should be number", () => {
+      it("'source' property value should be string", () => {
         // given
         apiIsAvailable();
 
@@ -155,7 +155,7 @@ describe('#GET example', () => {
         //then
         haveProperty(request, 'pressure', 'number');
       });
-      it("'humidity' property value should be string", () => {
+      it("'humidity' property value should be number", () => {
         // given
         apiIsAvailable();
 
@@ -165,7 +165,7 @@ describe('#GET example', () => {
         //then
         haveProperty(request, 'humidity', 'number');
       });
-      it("'source' property value should be number", () => {
+      it("'source' property value should be string", () => {
         // given
         apiIsAvailable();
 
@@ -174,6 +174,52 @@ describe('#GET example', () => {
 
         //then
         haveProperty(request, 'source', 'string');
+      });
+    });
+  });
+
+  describe("'alternateSource' should have diffrent 'source' depending of its value", () => {
+    it("'source' should contains openweathermap.org when 'alternateSource=false'", () => {
+      // given
+      apiIsAvailable();
+
+      //when
+      const request = getCurrentWeather(1, 1, false);
+
+      //then
+      request.should((response) => {
+        expect(response.body.source).contains(
+          'https://api.openweathermap.org/data/2.5/weather?',
+        );
+      });
+    });
+    it("'source' should contains weatherbit.it when 'alternateSource=true'", () => {
+      // given
+      apiIsAvailable();
+
+      //when
+      const request = getCurrentWeather(1, 1, true);
+
+      //then
+      request.should((response) => {
+        expect(response.body.source).contains(
+          'https://api.weatherbit.io/v2.0/current?',
+        );
+      });
+    });
+
+    it("'alterneteSource' is optional and default value should be 'false' and use OpenWeatherApi", () => {
+      // given
+      apiIsAvailable();
+
+      //when
+      const request = getCurrentWeather(1, 1);
+
+      //then
+      request.should((response) => {
+        expect(response.body.source).contains(
+          'https://api.openweathermap.org/data/2.5/weather?',
+        );
       });
     });
   });
@@ -188,7 +234,7 @@ function apiIsAvailable() {
 function getCurrentWeather(
   latitude: number,
   longitude: number,
-  alternateSource: boolean,
+  alternateSource?: boolean,
 ): Cypress.Chainable<Cypress.Response<any>> {
   return cy.request({
     method: 'GET',
@@ -206,7 +252,7 @@ async function haveProperty(
   key: string,
   type?: string,
 ) {
-  request.should((response) => {
+  request.then((response) => {
     if (type != undefined) {
       expect(response.body).to.have.property(key).a(type);
     } else {
