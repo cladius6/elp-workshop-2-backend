@@ -1,4 +1,5 @@
 import { ConfigService } from '@nestjs/config';
+import { WeatherDataInterface } from '../interfaces/weather.interface';
 import { OpenWeatherMap } from './openWeatherMap';
 
 export class OpenWeatherMapAdapter extends OpenWeatherMap {
@@ -9,12 +10,13 @@ export class OpenWeatherMapAdapter extends OpenWeatherMap {
     const data = await super.getCurrentWeatherData();
     return this.formattedData(data);
   }
-  toCelcius(kelvinTemp: number): number {
-    const celciusTemp = kelvinTemp - 273.15;
-    return celciusTemp;
+
+  private toCelcius(kelvinTemp: number): number {
+    const celciusTemp = (kelvinTemp - 273.15).toFixed(1);
+    return parseFloat(celciusTemp);
   }
 
-  formattedData(data) {
+  private formattedData(data: WeatherDataInterface) {
     data['temperature'] = this.toCelcius(data['temperature']);
     return data;
   }
