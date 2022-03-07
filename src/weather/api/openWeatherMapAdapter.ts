@@ -3,7 +3,7 @@ import { OpenWeatherMap } from './openWeatherMap';
 
 export class OpenWeatherMapAdapter extends OpenWeatherMap {
   constructor(configService: ConfigService, lat: number, lon: number) {
-    super(configService, lat, lat);
+    super(configService, lat, lon);
   }
   async getCurrentWeatherData() {
     const data = await super.getCurrentWeatherData();
