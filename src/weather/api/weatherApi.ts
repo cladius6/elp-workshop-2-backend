@@ -1,5 +1,5 @@
 import { AxiosResponse } from '@nestjs/terminus/dist/health-indicator/http/axios.interfaces';
-import { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { WeatherDataInterface } from '../interfaces/weather.interface';
 export class WeatherApi {
   lon: number;
@@ -15,6 +15,10 @@ export class WeatherApi {
       params: { lat: this.lat, lon: this.lon },
     });
     this.searchWeatherData(response.data, keywords);
+    this.addWeatherData(
+      'source',
+      response.config.baseURL + axios.getUri(response.config),
+    );
     return this.weatherData;
   }
 
