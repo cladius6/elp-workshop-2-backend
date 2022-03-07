@@ -223,34 +223,56 @@ describe('#GET example', () => {
       });
     });
   });
-  it("should return 'status: 400' if longitude or latitude not given", () => {
-    // given
-    apiIsAvailable();
-    //when
-    const request = getCurrentWeather();
-    //then
-    request.should((response) => {
-      expect(response.status).to.eq(400);
+  describe("correctly returns 'status' property", () => {
+    it("should return 'status: 400' if longitude or latitude not given", () => {
+      // given
+      apiIsAvailable();
+      //when
+      const request = getCurrentWeather();
+      //then
+      request.should((response) => {
+        expect(response.status).to.eq(400);
+      });
     });
-  });
-  it("should return 'status: 400' if longitude doesn't belong to the collection <-180,180>", () => {
-    // given
-    apiIsAvailable();
-    //when
-    const request = getCurrentWeather(4, 181);
-    //then
-    request.should((response) => {
-      expect(response.status).to.eq(400);
+    it("should return 'status: 400' if longitude doesn't belong to the collection <-180,180>", () => {
+      // given
+      apiIsAvailable();
+      //when
+      const request = getCurrentWeather(4, 181);
+      //then
+      request.should((response) => {
+        expect(response.status).to.eq(400);
+      });
     });
-  });
-  it("should return 'status: 400' if latitude doesn't belong to the collection <-90,90>", () => {
-    // given
-    apiIsAvailable();
-    //when
-    const request = getCurrentWeather(-91, 90);
-    //then
-    request.should((response) => {
-      expect(response.status).to.eq(400);
+    it("should return 'status: 400' if latitude doesn't belong to the collection <-90,90>", () => {
+      // given
+      apiIsAvailable();
+      //when
+      const request = getCurrentWeather(-91, 90);
+      //then
+      request.should((response) => {
+        expect(response.status).to.eq(400);
+      });
+    });
+    it("should return 'status: 200' if latitude in on the border of collection <-90,90>", () => {
+      // given
+      apiIsAvailable();
+      //when
+      const request = getCurrentWeather(-90, 90);
+      //then
+      request.should((response) => {
+        expect(response.status).to.eq(200);
+      });
+    });
+    it("should return 'status: 200' if longitude in on the border of collection <-180,180>", () => {
+      // given
+      apiIsAvailable();
+      //when
+      const request = getCurrentWeather(-90, 180);
+      //then
+      request.should((response) => {
+        expect(response.status).to.eq(200);
+      });
     });
   });
 });

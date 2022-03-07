@@ -21,7 +21,7 @@ export class WeatherBit extends WeatherApi {
   private createClient() {
     return axios.create({
       baseURL: this.configService.get<string>('weatherApi.weatherBit.baseURL'),
-      timeout: 1000,
+      timeout: 9000,
       headers: { 'Content-Type': 'application/json' },
       params: {
         key: this.configService.get<string>('weatherApi.weatherBit.key'),
