@@ -50,7 +50,7 @@ export class WeatherApi {
   };
 
   // Search for required weather data from recived api data.
-  searchWeatherData(
+  private searchWeatherData(
     data: AxiosResponse,
     keywords: WeatherBitKeywordsInterface | OpenWeatherMapKeywordsInterface,
   ) {
