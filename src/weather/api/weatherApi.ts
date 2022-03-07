@@ -50,7 +50,10 @@ export class WeatherApi {
   };
 
   // Search for required weather data from recived api data.
-  searchWeatherData(data: AxiosResponse, keywords) {
+  searchWeatherData(
+    data: AxiosResponse,
+    keywords: WeatherBitKeywordsInterface | OpenWeatherMapKeywordsInterface,
+  ) {
     for (const prop in data) {
       if (typeof data[prop] == 'object' && data[prop] !== null) {
         this.searchWeatherData(data[prop], keywords);
